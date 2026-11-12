@@ -1,0 +1,18 @@
+name: LOOP 24/7 Autonomous Publisher
+
+on:
+  schedule:
+    # Runs every 10 minutes, 24 hours a day, 7 days a week, 365 days a year (100% Free)
+    - cron: '*/10 * * * *'
+  workflow_dispatch: # Allows manual trigger from GitHub UI / CLI
+
+jobs:
+  check-and-publish:
+    name: Check & Publish Due Instagram Reels
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping LOOP Auto-Publish Engine
+        run: |
+          echo "Triggering LOOP engine at $(date -u)..."
+          RESPONSE=$(curl -s -X POST https://buffer-superprofile.vercel.app/api/cron/publish)
+          echo "LOOP Response: $RESPONSE"
